@@ -1,4 +1,6 @@
 import subprocess
+import os
+
 ip = "10.0.0."
 last = 3
 
@@ -33,15 +35,24 @@ for i in lista:
 
 succes_file = open("success.txt","a")
 failure_file = open("failure.txt","a")
+c = '"'
 
+sentence1 = "mysql -uroot -pnewcastle db1 << EOF\nload data local infile 'success.txt'\ninto table tb1\nfields terminated by ' ';\nEOF"
+sentence2 = "mysql -uroot -pnewcastle db1 << EOF\nload data local infile 'failure.txt'\ninto table tb1\nfields terminated by ' ';\nEOF"
 
 for i in succes:
-	succes_file.write(i)
-print "fallos"
-for i in failure:
-	failure_file.write(i)
+	succes_file.write(i+'\n')
 succes_file.close()
+os.system(sentence1)
+
+print "fallos"
+
+for i in failure:
+	failure_file.write(i+'\n')
 failure_file.close()
+os.system(sentence2)
+
+
 
 
 
