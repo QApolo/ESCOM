@@ -1,7 +1,6 @@
 import subprocess
-
 ip = "10.0.0."
-last = 255
+last = 3
 
 def doStuff():
 	lista = []
@@ -31,11 +30,18 @@ for i in lista:
 		succes.append(i[1])
 	else:
 		failure.append(i[1])
+
+succes_file = open("success.txt","a")
+failure_file = open("failure.txt","a")
+
+
 for i in succes:
-	print i
+	succes_file.write(i)
 print "fallos"
 for i in failure:
-	print i
+	failure_file.write(i)
+succes_file.close()
+failure_file.close()
 
 
 
