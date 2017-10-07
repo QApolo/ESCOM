@@ -32,6 +32,7 @@ void inicio(vector <char> &alfabeto, vector <string> &estados,
 
 
 }
+//time complexity O(|S|*log2(Q)*log2(A))
 bool AFD(const string &S, int index, const set <string> &finales, string current_state, 
 	map <string, map <char, string> > &transiciones)
 {
