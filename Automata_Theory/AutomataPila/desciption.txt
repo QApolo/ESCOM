@@ -1,0 +1,47 @@
+Entrada:
+
+Un numero positivo Q que representa la cantidad de estados..
+En la siguiente linea encontramos qi (1<=i<=Q) elementos separados por espacio
+donde cada qi representa un estado.
+
+Un numero A que representa la cantidad de simbolos del alfabeto de entrada
+seguido de aj elemento (1<=j<=A) que denotan cada simbolo del conjunto de símbolos
+separados por espacio.
+
+
+Un numero positivo P que representa la cantidad de símbolos del alfabeto de la pila
+seguido por pk con 1<=k<=P elementos denotando dicho conjunto.
+
+Un numero positivo N que describe cada una una transicion.
+
+Las siguientes N lineas describen cada una un conjunto detallado a continuación:
+
+Una terna del tipo
+qi aj X 
+	o del tipo	
+qi & X
+Donde & representa epsilon, que no pertenece al conjunto de simbolos del alfabeto de entrada y X es es el simbolo tope de la pila tal que X pertenece al conjunto de simbolos de la pila, es decir X es un pk.
+
+seguido de la terna, encontramos un numero R que denota el conjunto de salida de cada terna.
+En la siguiente linea se encuentran R pares.
+qr yr
+donde qr es el nuevo estado e yr es la cadena que remplaza X
+
+La siguiente linea se encuentra una cadena q0 que representa el estado inicial de la pila.
+la siguiente linea contiene el elemento inicial de la pila z0 en forma de cadena.
+La siguiente linea contiene un numero F
+seguido de F cadenas ql con 1<=l<=F y F <=Q  separadas por espacio.
+donde cada ql es un estado de aceptación.
+
+Un numero C>0 que representa la cantidad de cadenas de las que se desea conocer si pertenece o no al lenguaje.
+seguida de C cadenas separadas por salto Sc con 1<= c <= C
+
+Salida:
+La cadena Sc
+Si la cadena es aceptada imprimir el mensaje 
+"Aceptada"
+seguida del camino que llevó al lenguaje de aceptación
+
+Si la cadena no fue aceptada, simplemente imprimir el mensaje
+"No aceptada".
+
