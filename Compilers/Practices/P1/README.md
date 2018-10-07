@@ -10,6 +10,7 @@
         current_state, element_from_alphabet, next_state
     
 ## EXAMPLE
+'''
 0,1,2
 a,b
 0
@@ -18,3 +19,4 @@ a,b
 0,a,1
 0,b,0
 1,b,2
+'''
