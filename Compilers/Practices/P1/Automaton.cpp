@@ -3,7 +3,7 @@
 using namespace std;
 vector <string> split(string s, char del)
 {
-	std::vector<string> splitted;
+	vector<string> splitted;
 
 	string cur = "";
 	for(int i = 0; i < s.length(); i++)
@@ -20,6 +20,8 @@ vector <string> split(string s, char del)
 		splitted.push_back(cur);
 	return splitted;
 }
+
+
 class Automata
 {
 	private:
@@ -29,10 +31,10 @@ class Automata
 		set<string> final;//vector<string> final;
 		map<pair<string, char>, vector<string> > delta;
 		vector <string> errores;
-
 		string e_err = "e_err";
+
 	public:
-		string path;
+		vector <string> paths;
 		bool valid;
 		Automata(string nameFile)
 		{
@@ -86,16 +88,26 @@ class Automata
 				for(string s: it->second)
 					cout << "s(" << (it->first).first<<"," << (it->first).second << ") = " << s << endl;
 		}
-		void ejecutar(string cad, string cur_s, int pos, string path )
+		void ejecutar(string cad)
 		{
-			if(sigma.find(cad[pos]) == sigma.end()) pos++;
-			if(pos >= cad.length())
+			ejecutar(cad, q0, 0,"","");
+		}
+		void ejecutar(string cad, string cur_s, int pos, string path,string error)
+		{
+			while(pos < cad.length() && sigma.find(cad[pos]) == sigma.end())
 			{
-				imprimirErrores();
-				
+				string aux;
+				aux.push_back(cad[pos]);
+				error += cur_s + "("+	aux + ") ";
+				pos++;
+			} 
+			if(pos >= cad.length())
+			{	
 				if(final.find(cur_s) != final.end())
 				{
-					this->path = path;
+					path += cur_s+"( )";
+					paths.push_back(path);
+					errores.push_back(error);
 					valid = true;
 					return;
 				}
@@ -103,23 +115,21 @@ class Automata
 			}
 			for(string s:delta[make_pair(cur_s,cad[pos])])
 			{
+				/*
 				if(s == e_err && cur_s != s)
 				{
 					string aux;
-					aux.push_back(cad[pos]);
-					errores.push_back("("+cur_s+","+aux+")="+e_err);
-				}
-				ejecutar(cad,s, pos + 1,path + cur_s + "->");
+					aux.push_back(cad[pos]);//errores.push_back("("+cur_s+","+aux+")="+e_err);
+				}*/
+				string ns;
+				ns.push_back(cad[pos]);
+				ejecutar(cad,s, pos + 1, path + cur_s +"("+ns+")" + "->",error);
 			}
 		}
 		void imprimirErrores()
 		{
 			for(string err: errores)
 				cout << err << endl;
-		}
-		string getInitialState()
-		{
-			return q0;
 		}
 };
 
@@ -132,10 +142,13 @@ int main(int argc, char const *argv[])
 	auto1.imprimirDelta();
 	cout << endl;
 
-	auto1.ejecutar(cadena, auto1.getInitialState(), 0,"");
+	auto1.ejecutar(cadena);//auto1.ejecutar(cadena, auto1.getInitialState(), 0,"","");
 	cout << endl;
 	if(!auto1.valid) cout << "NO ";
-	cout <<"VALIDA: \n"<< auto1.path << endl;
-
+	cout <<"VALIDA: \n";
+	for(string s: auto1.paths)//cout<< auto1.path << endl;
+		cout << s << endl;
+	cout << '\n'<< "ERRORES" << '\n';
+	auto1.imprimirErrores();
 	return 0;
 }
