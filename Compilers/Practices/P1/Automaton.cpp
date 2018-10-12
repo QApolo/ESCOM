@@ -6,10 +6,10 @@ vector <string> split(string s, char del)
 	vector<string> splitted;
 
 	string cur = "";
-	for(int i = 0; i < s.length(); i++)
+	for(char c: s)
 	{
-		if(s[i] != del)
-			cur.push_back(s[i]);
+		if(c != del)
+			cur.push_back(c);
 		else
 		{
 			splitted.push_back(cur);
@@ -20,7 +20,6 @@ vector <string> split(string s, char del)
 		splitted.push_back(cur);
 	return splitted;
 }
-
 
 class Automata
 {
@@ -40,30 +39,32 @@ class Automata
 		{
 			ifstream fin (nameFile);
 			string aux;
-			fin >> aux;
+			getline(fin,aux);
 			Q = split(aux, ',');
 
-			fin >> aux;
+			getline(fin,aux);
 			vector <string> sigma_vec;
 			sigma_vec = split(aux,',');
 			for(string s: sigma_vec)
 				sigma.insert(s[0]);
 
-			fin >> q0;
+			getline(fin,q0);
 
-			fin >> aux;
+			getline(fin,aux);
 			vector <string> final_vec;
 			final_vec = split(aux, ',');
 			for(string s: final_vec)
 				final.insert(s);
 
-			while(fin >> aux)
+			while(!fin.eof())
 			{
-				vector <string> trans = split(aux, ',');
+				getline(fin,aux);
+				vector <string> trans = split(aux, ','); 
 				delta[make_pair(trans[0], trans[1][0])].push_back(trans[2]);
 			}
 			completarDelta();
 			valid = false;
+			fin.close();
 		}
 		void completarDelta()
 		{
@@ -131,10 +132,11 @@ class Automata
 
 int main(int argc, char const *argv[])
 {
-	Automata auto1("input.txt");
 	string cadena;
+	Automata auto1("input.txt");
 
-	cin >> cadena;
+	getline(cin,cadena);
+	cout << cadena << endl;
 
 	auto1.imprimirDelta();
 	cout << endl;
